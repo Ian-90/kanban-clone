@@ -7,8 +7,10 @@ function App() {
         <h1 className="text-3xl text-white font-bold">Proeject Kanvan</h1>
       </header>
       <main className="mt-10">
-        <section>
-          <Board />
+        <section className="flex gap-x-10">
+          <Board title="To Do" />
+          <Board title="In Progress" />
+          <Board title="Done" />
         </section>
       </main>
     </div>
