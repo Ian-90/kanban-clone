@@ -44,9 +44,14 @@ export const useBoard = () => {
     setCardList(() => copyCardList);
   };
 
+  const deleteCard = (id: string) => {
+    setCardList((list) => list.filter((card) => card.id !== id));
+  };
+
   return {
     cardList,
     createCard,
     updateCard,
+    deleteCard,
   };
 };

@@ -7,7 +7,7 @@ type Props = {
 };
 
 const Board = ({ title }: Props) => {
-  const { cardList, createCard, updateCard } = useBoard();
+  const { cardList, createCard, updateCard, deleteCard } = useBoard();
 
   return (
     <article className="w-80 px-6 py-4 rounded-lg bg-gray-200 flex flex-col gap-y-5">
@@ -21,6 +21,7 @@ const Board = ({ title }: Props) => {
             id={id}
             title={title}
             onCardHandler={updateCard}
+            onCardDeleteHandler={deleteCard}
           />
         ))}
       </section>

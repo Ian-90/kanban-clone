@@ -1,12 +1,13 @@
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../../constants";
-
+import { XMarkIcon } from "@heroicons/react/24/solid";
 type Props = {
   id: string;
   title: string;
   onCardHandler: (sourceId: string, targetId: string) => void;
+  onCardDeleteHandler: (id: string) => void;
 };
-const Card = ({ id, title, onCardHandler }: Props) => {
+const Card = ({ id, title, onCardHandler, onCardDeleteHandler }: Props) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: () => ({
@@ -41,11 +42,19 @@ const Card = ({ id, title, onCardHandler }: Props) => {
     >
       <div
         ref={drag}
-        className={`p-3 bg-white rounded-md cursor-pointer ${
+        className={`p-3 bg-white rounded-md cursor-pointer relative ${
           isDragging ? "opacity-50" : "opacity-100"
         }`}
       >
-        {title} {id}
+        <span>
+          {title} {id}
+        </span>
+        <button
+          className="absolute top-2 right-2"
+          onClick={() => onCardDeleteHandler(id)}
+        >
+          <XMarkIcon className="w-4 h-4" />
+        </button>
       </div>
     </div>
   );
