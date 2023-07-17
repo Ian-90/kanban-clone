@@ -2,10 +2,11 @@ import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../../constants";
 
 type Props = {
-  id: number;
-  onCardHandler: (sourceId: number, targetId: number) => void;
+  id: string;
+  title: string;
+  onCardHandler: (sourceId: string, targetId: string) => void;
 };
-const Card = ({ id, onCardHandler }: Props) => {
+const Card = ({ id, title, onCardHandler }: Props) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: () => ({
@@ -26,8 +27,7 @@ const Card = ({ id, onCardHandler }: Props) => {
     }),
     end: (draggedItem, monitor) => {
       const { sourceId } = draggedItem;
-      const dropResult = monitor.getDropResult<{ targetId: number }>();
-      console.log('...', sourceId, dropResult)
+      const dropResult = monitor.getDropResult<{ targetId: string }>();
       if (dropResult) {
         onCardHandler(sourceId, dropResult.targetId);
       }
@@ -45,7 +45,7 @@ const Card = ({ id, onCardHandler }: Props) => {
           isDragging ? "opacity-50" : "opacity-100"
         }`}
       >
-        Task {id}
+        {title} {id}
       </div>
     </div>
   );
