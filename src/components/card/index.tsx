@@ -1,17 +1,18 @@
 import { useDrag, useDrop } from "react-dnd";
 import { ItemTypes } from "../../constants";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { Position } from "../../types";
+
 type Props = {
-  id: string;
+  position: Position;
   title: string;
-  onCardHandler: (sourceId: string, targetId: string) => void;
-  onCardDeleteHandler: (id: string) => void;
+  handleMoveCard: (sourcePosition: Position, targetPosition: Position) => void;
 };
-const Card = ({ id, title, onCardHandler, onCardDeleteHandler }: Props) => {
+const Card = ({ position, title, handleMoveCard }: Props) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: () => ({
-      targetId: id,
+      position,
     }),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
@@ -21,16 +22,17 @@ const Card = ({ id, title, onCardHandler, onCardDeleteHandler }: Props) => {
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.CARD,
     item: {
-      sourceId: id,
+      position,
     },
     collect: (monitor) => ({
       isDragging: !!monitor.isDragging(),
     }),
     end: (draggedItem, monitor) => {
-      const { sourceId } = draggedItem;
-      const dropResult = monitor.getDropResult<{ targetId: string }>();
+      const dropResult = monitor.getDropResult<{
+        position: Position;
+      }>();
       if (dropResult) {
-        onCardHandler(sourceId, dropResult.targetId);
+        handleMoveCard(draggedItem.position, dropResult.position);
       }
     },
   });
@@ -46,13 +48,8 @@ const Card = ({ id, title, onCardHandler, onCardDeleteHandler }: Props) => {
           isDragging ? "opacity-50" : "opacity-100"
         }`}
       >
-        <span>
-          {title} {id}
-        </span>
-        <button
-          className="absolute top-2 right-2"
-          onClick={() => onCardDeleteHandler(id)}
-        >
+        <span>{title}</span>
+        <button className="absolute top-2 right-2">
           <XMarkIcon className="w-4 h-4" />
         </button>
       </div>

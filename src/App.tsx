@@ -1,6 +1,8 @@
 import Board from "./components/board";
+import useBoardList from "./hooks/useBoardList";
 
 function App() {
+  const { boardList, handleMoveCard } = useBoardList();
   return (
     <div className="px-10 py-8">
       <header>
@@ -8,9 +10,15 @@ function App() {
       </header>
       <main className="mt-10">
         <section className="flex gap-x-10">
-          <Board title="To Do" />
-          {/* <Board title="In Progress" /> */}
-          {/* <Board title="Done" /> */}
+          {boardList.map(({ id, title, cardList }, idx) => (
+            <Board
+              key={id}
+              positionX={idx}
+              title={title}
+              cardList={cardList}
+              handleMoveCard={handleMoveCard}
+            />
+          ))}
         </section>
       </main>
     </div>
