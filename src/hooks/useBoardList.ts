@@ -25,8 +25,8 @@ const useBoardList = () => {
       cardList: [],
     },
     {
-      id: 'done',
-      title: 'Done',
+      id: "done",
+      title: "Done",
       cardList: [],
     },
   ]);
@@ -58,9 +58,24 @@ const useBoardList = () => {
 
     return setBoardList((prev) => copyBoardList);
   };
+
+  const handleCreateCard = (positionX: number) => {
+    const copyBoardList = [...boardList];
+    copyBoardList[positionX].cardList = [
+      ...copyBoardList[positionX].cardList,
+      {
+        id: crypto.randomUUID(),
+        title: "New Task",
+        description: "",
+      },
+    ];
+
+    return setBoardList((prev) => copyBoardList);
+  };
   return {
     boardList,
     handleMoveCard,
+    handleCreateCard,
   };
 };
 

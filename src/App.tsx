@@ -2,7 +2,7 @@ import Board from "./components/board";
 import useBoardList from "./hooks/useBoardList";
 
 function App() {
-  const { boardList, handleMoveCard } = useBoardList();
+  const { boardList, handleMoveCard, handleCreateCard } = useBoardList();
   return (
     <div className="px-10 py-8">
       <header>
@@ -17,6 +17,7 @@ function App() {
               title={title}
               cardList={cardList}
               handleMoveCard={handleMoveCard}
+              handleCreateCard={handleCreateCard}
             />
           ))}
         </section>

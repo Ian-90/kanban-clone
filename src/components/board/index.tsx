@@ -9,9 +9,10 @@ type Props = {
   title: string;
   cardList: ICard[];
   handleMoveCard: (sourcePosition: Position, targetPosition: Position) => void;
+  handleCreateCard: (positionX: number) => void
 };
 
-const Board = ({ positionX, title, cardList, handleMoveCard }: Props) => {
+const Board = ({ positionX, title, cardList, handleMoveCard, handleCreateCard }: Props) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: () => ({
@@ -45,7 +46,7 @@ const Board = ({ positionX, title, cardList, handleMoveCard }: Props) => {
       <footer>
         <button
           className="inline-flex items-center gap-x-2"
-          // onClick={createCard}
+          onClick={() => handleCreateCard(positionX)}
         >
           <PlusIcon className="w-5 h-5" />
           <span className="font-medium">Add a card</span>
