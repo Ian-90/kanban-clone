@@ -12,13 +12,17 @@ type Props = {
 const Card = ({ position, title, handleMoveCard, handleDeleteCard }: Props) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
-    drop: () => ({
-      position,
-    }),
+    drop: (item, monitor) => {
+      if (!monitor.didDrop()) {
+        return {
+          position,
+        };
+      }
+    },
     collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
+      isOver: !!monitor.isOver({ shallow: true }),
     }),
-  }));
+  }), [position]);
 
   const [{ isDragging }, drag] = useDrag({
     type: ItemTypes.CARD,

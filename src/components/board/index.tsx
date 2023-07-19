@@ -23,13 +23,17 @@ const Board = ({
 }: Props) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
-    drop: () => ({
-      position: [positionX, 0],
-    }),
+    drop: (item, monitor) => {
+      if (!monitor.didDrop()) {
+        return {
+          position: [positionX, 0],
+        };
+      }
+    },
     collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
+      isOver: !!monitor.isOver({ shallow: true }),
     }),
-  }));
+  }), [positionX]);
 
   return (
     <article
