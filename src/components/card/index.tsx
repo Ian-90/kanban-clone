@@ -7,8 +7,9 @@ type Props = {
   position: Position;
   title: string;
   handleMoveCard: (sourcePosition: Position, targetPosition: Position) => void;
+  handleDeleteCard: (position: Position) => void;
 };
-const Card = ({ position, title, handleMoveCard }: Props) => {
+const Card = ({ position, title, handleMoveCard, handleDeleteCard }: Props) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: () => ({
@@ -49,7 +50,10 @@ const Card = ({ position, title, handleMoveCard }: Props) => {
         }`}
       >
         <span>{title}</span>
-        <button className="absolute top-2 right-2">
+        <button
+          className="absolute top-2 right-2"
+          onClick={() => handleDeleteCard(position)}
+        >
           <XMarkIcon className="w-4 h-4" />
         </button>
       </div>

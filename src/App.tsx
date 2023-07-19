@@ -2,7 +2,8 @@ import Board from "./components/board";
 import useBoardList from "./hooks/useBoardList";
 
 function App() {
-  const { boardList, handleMoveCard, handleCreateCard } = useBoardList();
+  const { boardList, handleMoveCard, handleCreateCard, handleDeleteCard } =
+    useBoardList();
   return (
     <div className="px-10 py-8">
       <header>
@@ -18,6 +19,7 @@ function App() {
               cardList={cardList}
               handleMoveCard={handleMoveCard}
               handleCreateCard={handleCreateCard}
+              handleDeleteCard={handleDeleteCard}
             />
           ))}
         </section>

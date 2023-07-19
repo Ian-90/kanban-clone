@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { IBoard, Position } from "../types";
 
 const useBoardList = () => {
@@ -72,10 +72,22 @@ const useBoardList = () => {
 
     return setBoardList((prev) => copyBoardList);
   };
+
+  const handleDeleteCard = (position: Position) => {
+    const [positionX, positionY] = position;
+    const copyBoardList = [...boardList];
+    copyBoardList[positionX].cardList = copyBoardList[
+      positionX
+    ].cardList.filter((_, idx) => idx !== positionY);
+
+    return setBoardList((prev) => copyBoardList);
+  };
+
   return {
     boardList,
     handleMoveCard,
     handleCreateCard,
+    handleDeleteCard,
   };
 };
 

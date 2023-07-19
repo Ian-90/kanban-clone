@@ -9,10 +9,18 @@ type Props = {
   title: string;
   cardList: ICard[];
   handleMoveCard: (sourcePosition: Position, targetPosition: Position) => void;
-  handleCreateCard: (positionX: number) => void
+  handleCreateCard: (positionX: number) => void;
+  handleDeleteCard: (position: Position) => void;
 };
 
-const Board = ({ positionX, title, cardList, handleMoveCard, handleCreateCard }: Props) => {
+const Board = ({
+  positionX,
+  title,
+  cardList,
+  handleMoveCard,
+  handleCreateCard,
+  handleDeleteCard,
+}: Props) => {
   const [{ isOver }, drop] = useDrop(() => ({
     accept: ItemTypes.CARD,
     drop: () => ({
@@ -40,6 +48,7 @@ const Board = ({ positionX, title, cardList, handleMoveCard, handleCreateCard }:
             position={[positionX, idx]}
             title={title}
             handleMoveCard={handleMoveCard}
+            handleDeleteCard={handleDeleteCard}
           />
         ))}
       </section>
